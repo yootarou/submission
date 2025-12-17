@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ポートフォリオ</title>
+  <style>
+    :root {
+      --bg: #f4f6fb;
+      --card: #fff;
+      --text: #1f2937;
+      --muted: #4b5563;
+      --accent: #6366f1;
+      --border: #e5e7eb;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: "Inter", system-ui, -apple-system, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; padding: 24px; }
+    .container { max-width: 1080px; margin: 0 auto; display: flex; flex-direction: column; gap: 32px; }
+    section { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 24px; }
+    h1, h2, h3 { font-weight: 700; }
+    h1 { font-size: 24px; margin-bottom: 8px; }
+    h2 { font-size: 20px; margin-bottom: 16px; }
+    h3 { font-size: 18px; margin-bottom: 8px; }
+    p { color: var(--muted); }
+
+    /* Profile */
+    .profile { display: grid; grid-template-columns: auto 1fr; gap: 20px; align-items: center; }
+    .profile img { width: 140px; height: 140px; border-radius: 50%; object-fit: cover; border: 3px solid var(--accent); }
+    .profile .info { display: flex; flex-direction: column; gap: 8px; }
+    .links { display: flex; gap: 10px; flex-wrap: wrap; }
+    .links a { text-decoration: none; color: #fff; background: var(--accent); padding: 10px 16px; border-radius: 8px; font-weight: 600; }
+
+    /* Projects */
+    .projects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; }
+    .card { border: 1px solid var(--border); border-radius: 10px; overflow: hidden; display: flex; flex-direction: column; }
+    .card img { width: 100%; height: 180px; object-fit: cover; }
+    .card-body { padding: 16px; display: flex; flex-direction: column; gap: 10px; }
+    .tags { display: flex; gap: 8px; flex-wrap: wrap; }
+    .tag { background: #eef2ff; color: #4338ca; padding: 6px 10px; border-radius: 999px; font-size: 12px; font-weight: 600; }
+    .card a { color: var(--accent); text-decoration: none; font-weight: 600; }
+
+    /* Contact */
+    .contact-button { display: inline-block; padding: 14px 32px; border: none; border-radius: 10px; background: var(--accent); color: #fff; font-weight: 700; cursor: pointer; text-decoration: none; font-size: 16px; }
+    .contact-button:hover { opacity: 0.9; }
+
+    /* Animations */
+    .fade-in { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease, transform 0.6s ease; }
+    .fade-in.visible { opacity: 1; transform: translateY(0); }
+    
+    .card { transition: transform 0.3s ease, box-shadow 0.3s ease; }
+    .card:hover { transform: translateY(-8px); box-shadow: 0 12px 24px rgba(0,0,0,0.15); }
+    
+    .links a { transition: transform 0.2s ease, background 0.2s ease; }
+    .links a:hover { transform: scale(1.05); background: #4f46e5; }
+    
+    /* Scroll to top button */
+    .scroll-top { position: fixed; bottom: 30px; right: 30px; width: 50px; height: 50px; background: var(--accent); color: #fff; border: none; border-radius: 50%; cursor: pointer; display: none; align-items: center; justify-content: center; font-size: 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); transition: all 0.3s ease; z-index: 1000; }
+    .scroll-top:hover { transform: scale(1.1); background: #4f46e5; }
+    .scroll-top.visible { display: flex; }
+    
+    /* Filter buttons */
+    .filter-container { margin-bottom: 24px; display: flex; gap: 12px; flex-wrap: wrap; }
+    .filter-btn { padding: 8px 16px; border: 2px solid var(--border); background: var(--card); color: var(--text); border-radius: 20px; cursor: pointer; transition: all 0.3s ease; font-weight: 500; }
+    .filter-btn:hover { border-color: var(--accent); background: #eef2ff; }
+    .filter-btn.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+    
+    /* Typing animation */
+    .typing-text { border-right: 2px solid var(--accent); animation: blink 1s infinite; }
+    @keyframes blink { 0%, 50% { border-color: var(--accent); } 51%, 100% { border-color: transparent; } }
+    
+    /* Project card hidden state */
+    .card.hidden { display: none; }
+
+    @media (max-width: 640px) {
+      body { padding: 16px; }
+      .profile { grid-template-columns: 1fr; text-align: center; justify-items: center; }
+      .links { justify-content: center; }
+      .scroll-top { bottom: 20px; right: 20px; width: 45px; height: 45px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <section class="profile">
+      <img src="image/スクリーンショット 2025-08-22 19.03.41.png" alt="プロフィール写真">
+      <div class="info">
+        <h1>末成　陽太郎</h1>
+        <p>📧 yotarosuenari@gmail.com</p>
+        <p>📱 080-9117-9644</p>
+        <div class="links">
+          <a href="https://github.com/yootarou" target="_blank">GitHub</a>
+          <a href="https://www.linkedin.com/in/yotaro-suenari-079a2833a/" target="_blank">LinkedIn</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="projects">
+      <h2>プロジェクト</h2>
+      <div class="filter-container">
+        <button class="filter-btn active" data-filter="all">すべて</button>
+        <button class="filter-btn" data-filter="Python">Python</button>
+        <button class="filter-btn" data-filter="Streamlit">Streamlit</button>
+        <button class="filter-btn" data-filter="Django">Django</button>
+        <button class="filter-btn" data-filter="JavaScript">JavaScript</button>
+        <button class="filter-btn" data-filter="機械学習">機械学習</button>
+      </div>
+      <div class="projects-grid">
+        <div class="card" data-tags="Python JavaScript HTML CSS 機械学習">
+          <img src="image/スクリーンショット 2025-12-17 7.01.13.png" alt="Eコマース">
+          <div class="card-body">
+            <h3>植物病気検知アプリ開発</h3>
+            <p>障がい者向け農業施設で、写真から植物の病気の有無を判断するアプリの開発を行いました。<br>私は、アノテーションと機械学習モデルの制作を担当しました。こちらは完成物のみとなります</p>
+            <div class="tags">
+              <span class="tag">Python</span><span class="tag">Efficient net</span><span class="tag">Roboflow</span><span class="tag">HTML</span>
+              <span class="tag">CSS</span><span class="tag">JavaScript</span>
+            </div>
+            <a href="https://m-shintaro.github.io/ALSIA-Sample-App/" target="_blank">完成物を見る ←クリック</a>
+          </div>
+        </div>
+        <div class="card" data-tags="Python Streamlit Pandas">
+          <img src="image/スクリーンショット 2025-12-17 5.39.06.png" alt="タスク管理">
+          <div class="card-body">
+            <h3>企業分析アプリ</h3>
+            <p>このツールは、Streamlitを利用して貸借対照表(Balance Sheet)データをもとに財務分析を行うためのアプリケーションです。24項目の財務指標を自動算出し、視覚的に理解しやすい形で結果を提供します</p>
+            <div class="tags">
+              <span class="tag">Python</span><span class="tag">Streamlit</span><span class="tag">Pandas</span>
+            </div>
+            <a href="https://github.com/yootarou/accountant.git" target="_blank"> GitHub で見る ←クリック</a>
+          </div>
+        </div>
+        <div class="card" data-tags="Python Streamlit">
+          <img src="image/スクリーンショット 2025-12-17 7.49.43.png">
+          <div class="card-body">
+            <h3>移動トラッキングアプリ</h3>
+            <p>このアプリは、GPSデータフォーマットであるGPXファイルを解析して、ルートをインタラクティブな地図上に可視化するアプリケーションです。サイクリングやハイキングなどのワークアウトデータを、簡単かつ直感的に可視化することができます。 上の画像は実際に、visualizeレポジトリのデータに入っているGPXデータを読み込ませたものになります</p>
+            <div class="tags">
+              <span class="tag">Python</span>
+              <span class="tag">Streamlit</span>
+              <span class="tag">Folium</span>
+              <span class="tag">GPXPy</span>
+              <span class="tag">Streamlit-Folium</span>
+              
+            </div>
+            <a href="https://github.com/yootarou/visualize.git" target="_blank">GitHub で見る ←クリック</a>
+          </div>
+        </div>
+        <div class="card" data-tags="Python Django JavaScript HTML CSS">
+          <img src="image/スクリーンショット 2025-12-17 9.08.12.png">
+          <div class="card-body">
+            <h3>多機能ウェブアプリ</h3>
+            <p>このプロジェクトは、Django 5.2 を使用して開発された多機能なWebアプリケーションです。4つの主要なアプリケーション（helloapp、bookapp、todoapp、educationapp）を含む統合管理システムです。</p>
+            <div class="tags">
+              <span class="tag">Python 3.x</span>
+              <span class="tag">Django 5.2</span>
+              <span class="tag">Class-based Views</span>
+              <span class="tag">MVT アーキテクチャ</span>
+              <span class="tag">Django ORM</span>
+              <span class="tag">Django Authentication</span>
+              <span class="tag">Django Messages</span>
+              <span class="tag">Django Admin Panel</span>
+              <span class="tag">SQLite3</span>
+              <span class="tag">Django Migrations</span>
+              <span class="tag">Pandas</span>
+              <span class="tag">Matplotlib</span>
+              <span class="tag">django-pandas</span>
+              <span class="tag">HTML5</span>
+              <span class="tag">CSS3</span>
+              <span class="tag">レスポンシブデザイン</span>
+              <span class="tag">カスタムCSS</span>
+              <span class="tag">JavaScript</span>
+              
+            </div>
+            <a href="https://github.com/yootarou/myproject.git">GitHub で見る ←クリック</a>
+          </div>
+        </div>
+        <div class="card" data-tags="Python 機械学習 Pandas NumPy scikit-learn xgboost lightgbm SHAP">
+          <img src="image/Gemini_Generated_Image_ve7i97ve7i97ve7i.png">
+          <div class="card-body">
+            <h3>事故予測モデル開発</h3>
+            <p>このプロジェクトは交通事故リスクを予測するモデルの構築を目的としています。データの前処理や特徴量エンジニアリングを通じて事故の発生原因を解析し、機械学習モデルを用いてリスクスコアを算出します。具体的には、道路状況や環境（道路種別、天候、時間帯など）に基づいて事故リスクを予測することで、交通安全向上の一助を目指します</p>
+            <div class="tags">
+              <span class="tag">Python 3.9+</span>
+              <span class="tag">pandas</span>
+              <span class="tag">numpy</span>
+              <span class="tag">scikit-learn</span>
+              <span class="tag">xgboost</span>
+              <span class="tag">lightgbm</span>
+              <span class="tag">SHAP</span>
+              <span class="tag">KMean</span>
+            </div>
+            <a href="https://github.com/yootarou/accident_project.git" target="_blank">GitHub で見る ←クリック</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="contact">
+      <h2>お問い合わせ</h2>
+      <a href="mailto:yotarosuenari@gmail.com" class="contact-button">メールを送信する</a>
+    </section>
+  </div>
+
+  <button class="scroll-top" id="scrollTop" aria-label="トップに戻る">↑</button>
+
+  <script>
+    // Smooth scroll behavior
+    document.documentElement.style.scrollBehavior = 'smooth';
+
+    // Intersection Observer for fade-in animations
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, observerOptions);
+
+    // Add fade-in class to sections and cards
+    document.addEventListener('DOMContentLoaded', () => {
+      const sections = document.querySelectorAll('section');
+      const cards = document.querySelectorAll('.card');
+      
+      sections.forEach(section => {
+        section.classList.add('fade-in');
+        observer.observe(section);
+      });
+
+      cards.forEach(card => {
+        card.classList.add('fade-in');
+        observer.observe(card);
+      });
+    });
+
+    // Scroll to top button
+    const scrollTopBtn = document.getElementById('scrollTop');
+    
+    window.addEventListener('scroll', () => {
+      if (window.pageYOffset > 300) {
+        scrollTopBtn.classList.add('visible');
+      } else {
+        scrollTopBtn.classList.remove('visible');
+      }
+    });
+
+    scrollTopBtn.addEventListener('click', () => {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    });
+
+    // Project filtering functionality
+    const filterButtons = document.querySelectorAll('.filter-btn');
+    const projectCards = document.querySelectorAll('.card');
+
+    filterButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        // Remove active class from all buttons
+        filterButtons.forEach(btn => btn.classList.remove('active'));
+        // Add active class to clicked button
+        button.classList.add('active');
+
+        const filterValue = button.getAttribute('data-filter');
+
+        projectCards.forEach(card => {
+          const cardTags = card.getAttribute('data-tags');
+          
+          if (filterValue === 'all' || cardTags.includes(filterValue)) {
+            card.classList.remove('hidden');
+            // Trigger animation
+            setTimeout(() => {
+              card.style.opacity = '0';
+              card.style.transform = 'translateY(20px)';
+              setTimeout(() => {
+                card.style.opacity = '1';
+                card.style.transform = 'translateY(0)';
+              }, 50);
+            }, 10);
+          } else {
+            card.classList.add('hidden');
+          }
+        });
+      });
+    });
+
+    // Enhanced card hover effects
+    projectCards.forEach(card => {
+      card.addEventListener('mouseenter', function() {
+        this.style.transition = 'all 0.3s ease';
+      });
+    });
+
+    // Typing animation for name (optional enhancement)
+    const nameElement = document.querySelector('.profile h1');
+    if (nameElement) {
+      const originalText = nameElement.textContent;
+      nameElement.textContent = '';
+      nameElement.classList.add('typing-text');
+      
+      let i = 0;
+      const typeWriter = () => {
+        if (i < originalText.length) {
+          nameElement.textContent += originalText.charAt(i);
+          i++;
+          setTimeout(typeWriter, 100);
+        } else {
+          setTimeout(() => {
+            nameElement.classList.remove('typing-text');
+          }, 500);
+        }
+      };
+      
+      // Start typing animation after a short delay
+      setTimeout(typeWriter, 500);
+    }
+
+    // Add click animation to contact button
+    const contactButton = document.querySelector('.contact-button');
+    if (contactButton) {
+      contactButton.addEventListener('click', function(e) {
+        this.style.transform = 'scale(0.95)';
+        setTimeout(() => {
+          this.style.transform = 'scale(1)';
+        }, 150);
+      });
+    }
+
+    // Add parallax effect to profile image (subtle)
+    const profileImg = document.querySelector('.profile img');
+    if (profileImg) {
+      window.addEventListener('scroll', () => {
+        const scrolled = window.pageYOffset;
+        const rate = scrolled * 0.1;
+        profileImg.style.transform = `translateY(${rate}px)`;
+      });
+    }
+
+    // Add counter animation for projects (if needed)
+    const projectCount = projectCards.length;
+    const projectsSection = document.querySelector('.projects h2');
+    if (projectsSection) {
+      const originalText = projectsSection.textContent;
+      projectsSection.textContent = `${originalText} (${projectCount})`;
+    }
+  </script>
+
+</body>
+</html>
